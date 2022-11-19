@@ -39,8 +39,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       api.get('/me').then((response) => {
-        const { email, permissions, roles } = response.data
-        setUser({ email, permissions, roles })
+        if (response?.data) {
+          const { email, permissions, roles } = response.data
+          setUser({ email, permissions, roles })
+        }
       })
     }
   }, [])
@@ -52,7 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       })
 
-      const { token, refreshToken, permissions, roles } = response.data
+      const { token, refreshToken, permissions, roles } = response?.data
 
       // sessionStorage - ao fechar o app (navegador) ele morre
       // localStorage - é permanente mas não temos acesso no server side
@@ -74,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         roles,
       })
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
       router.push('/dashboard')
     } catch (error) {
