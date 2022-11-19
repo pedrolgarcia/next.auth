@@ -1,17 +1,24 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
+
 import styles from '../styles/Home.module.css'
 
+import { AuthContext } from '../contexts/AuthContext'
+
 export default function Home() {
+  const { signIn } = useContext(AuthContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
     const data = {
       email,
       password,
     }
+
+    await signIn(data)
   }
 
   return (

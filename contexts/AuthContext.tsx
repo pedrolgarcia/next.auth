@@ -10,7 +10,7 @@ type AuthContextData = {
   isAuthenticated: boolean
 }
 
-const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData)
 
 type AuthProviderProps = {
   children: ReactNode
@@ -20,7 +20,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = false
 
   async function signIn({ email, password }: SignInCredentials) {
-    console.log(email, password)
+    console.log({ email, password })
   }
 
   return (
