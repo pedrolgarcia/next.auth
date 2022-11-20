@@ -1,16 +1,20 @@
 import axios, { AxiosError } from 'axios'
 import { parseCookies, setCookie } from 'nookies'
 
+import { signOut } from '../contexts/AuthContext'
+
 let cookies = parseCookies()
 let isRefreshing = false
 let failedRequestsQueue: any[] = []
 
 export const api = axios.create({
   baseURL: 'http://localhost:3333',
-  headers: {
-    Authorization: `Bearer ${cookies['@next.auth:token']}`,
-  },
 })
+
+const { '@next.auth:token': tokenFromStorage } = cookies
+if (tokenFromStorage) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${tokenFromStorage}`
+}
 
 api.interceptors.response.use(
   (response) => response,
@@ -72,8 +76,10 @@ api.interceptors.response.use(
           })
         })
       } else {
-        //deslogar
+        signOut()
       }
     }
+
+    return Promise.reject(error)
   },
 )
