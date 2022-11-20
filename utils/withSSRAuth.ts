@@ -27,8 +27,8 @@ export function withSSRAuth<P extends { [key: string]: any }>(
       return await fn(ctx)
     } catch (err) {
       if (err instanceof AuthTokenError) {
-        destroyCookie(undefined, '@next.auth:token')
-        destroyCookie(undefined, '@next.auth:refreshToken')
+        destroyCookie(ctx, '@next.auth:token')
+        destroyCookie(ctx, '@next.auth:refreshToken')
       }
 
       return {

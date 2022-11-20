@@ -67,8 +67,6 @@ export function setupAPIClient(
 
                 if (typeof window !== 'undefined') {
                   signOut()
-                } else {
-                  return Promise.reject(new AuthTokenError())
                 }
               })
               .finally(() => {
