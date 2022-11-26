@@ -45,12 +45,12 @@ export function setupAPIClient(
                 const { token, refreshToken: newRefreshToken } = response.data
 
                 setCookie(ctx, '@next.auth:token', token, {
-                  maxAge: 60 * 60 * 24 * 30, // 30 days
+                  maxAge: 60 * 60 * 24 * 30,
                   path: '/',
                 })
 
                 setCookie(ctx, '@next.auth:refreshToken', newRefreshToken, {
-                  maxAge: 60 * 60 * 24 * 30, // 30 days
+                  maxAge: 60 * 60 * 24 * 30,
                   path: '/',
                 })
 
